@@ -1,0 +1,42 @@
+<nav>
+    <div class="profile">
+        <i class="far fa-user profile-icon"></i>
+        <h2>{{ request.user }}</h2>
+        <button class="btn-profile"><a href="{% url 'accounts:profile' request.user.pk %}">Perfil</a></button>
+    </div>
+    <ul>
+        {% if title == 'Home' %}
+            <li class="nav-select">
+        {% else %}
+            <li>
+        {% endif %}
+            <a href="{% url 'to_do_list:home' %}"><i class="fas fa-tasks"></i>home</a></li>
+        {% for list in lists_tasks_menu %}
+            {% if title == list %}
+                <li class="nav-select">
+            {% else %}
+                <li>
+            {% endif %}
+                    <a href="{% url 'to_do_list:list' list.pk %}"><i class="fas fa-tasks"></i>{{ list }}</a>
+                </li>
+        {% endfor %}
+    </ul>
+    <ul id="lists-member">
+        {% for list in lists_tasks_member_menu %}
+            {% if title == list %}
+                <li class="nav-select">
+            {% else %}
+                <li>
+            {% endif %}
+                    <a href="{% url 'to_do_list:list' list.pk %}"><i class="fas fa-tasks"></i>{{ list }}</a>
+                </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'to_do_list:list_new'%}" class="btn-create-list"><i class="fas fa-pen"></i> Criar lista</a>
+    <form class="js-form-logout" action="{% url 'accounts:logout' %}" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ request.user.username }}">
+        <button type="submit" class="btn-logout"><i class="fas fa-sign-out-alt"></i>Sair</button>
+    <form>
+<nav>
+{% include 'global/partials/modal-logout.html' %}

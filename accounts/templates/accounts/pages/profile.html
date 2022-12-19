@@ -1,0 +1,37 @@
+{% extends 'global/base.html' %}
+
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+    <div class="page-column">
+        <h1>Perfil</h1>
+        <div>
+            <div class="detail-group">
+                <h2 class="detail-label">Nome:</h2>
+                <div class="detail-info">{{user.first_name}}</div>
+            </div>
+            <div class="detail-group">
+                <h2 class="detail-label">Sobrenome:</h2>
+                <div class="detail-info">{{user.last_name}}</div>
+            </div>
+            <div class="detail-group">
+                <h2 class="detail-label">Nome de usuário:</h2>
+                <div class="detail-info">{{user.username}}</div>
+            </div>
+            <div class="detail-group">
+                <h2 class="detail-label">E-mail:</h2>
+                <div class="detail-info">{{user.email}}</div>
+            </div>
+        </div>
+        <div class="buttons-profile">
+            <a href="{% url 'accounts:change_profile' %}">Editar perfil</a>
+            <a href="{% url 'accounts:change_password' %}">Mudar senha</a>
+        </div>
+        <form></form>
+        <form class='js-form-delete-acc' action="{% url 'accounts:delete' %}" method='POST'>
+            {% csrf_token %}
+            <button id="delete-profile" type="submit">Excluir conta</button>
+        </form>
+    </div>
+    {% include 'global/partials/modal-delete-account.html' %}
+{% endblock content %}

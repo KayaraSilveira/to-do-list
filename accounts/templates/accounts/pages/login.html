@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/9e72dca8a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'global/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/styles.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    
+    <main class="container-register">
+        <div class="register-page">
+            <h1>Entre em sua conta</h1>
+            <h4>Se não possui uma conta <a href="{% url 'accounts:register' %}">Clique aqui</a> para se cadastrar</h4>
+            <form action="{% url 'accounts:login_create' %}" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{field.label}}</label>
+                            {{field}}
+                        
+                        {% if field.help_text %}
+                            <p>{{ field.help_text }}</p>
+                        {% endif %}
+
+                        <div class="errors-list">
+                            {{field.errors}}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="form-group-submit">
+                    <button type="submit">Entrar</button>
+                </div>
+            </form>
+            {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{% extends 'global/base.html' %}
+
+{% block title %}List{% endblock title %}
+
+{% block content %}
+    <div class="page">
+        <div class="column-form">
+            <h2>Escolha o nome da Lista de Tarefas</h2>
+            {% include 'global/partials/form.html' %}
+        </div>
+        {% include 'global/partials/widgets.html' %}
+    </div>
+
+  {% endblock content %}

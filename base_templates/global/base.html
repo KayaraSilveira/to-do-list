@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/9e72dca8a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'global/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/modal-styles.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/calendar-styles.css' %}">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    
+    <main class="container">
+        <div class="menu">
+            {% include 'global/partials/menu.html' %}
+        </div>
+        {% block content %}{% endblock content %}
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/pt-br.min.js" integrity="sha512-1IpxmBdyZx3okPiZ14mzw6+pOGa690uDmcdjqvT310Kwv3NRcjvL/aOtoSprEyvkDdAb7ZtM2um6KrLqLOY97w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'global/js/delete-task.js' %}"></script>
+    <script src="{% static 'global/js/delete-list.js' %}"></script>
+    <script src="{% static 'global/js/leave-list.js' %}"></script>
+    <script src="{% static 'global/js/logout.js' %}"></script>
+    <script src="{% static 'global/js/delete-account.js' %}"></script>
+    <script src="{% static 'global/js/calendar.js' %}"></script>
+    <script src="{% static 'global/js/clock.js' %}"></script>
+    <script src="{% static 'global/js/sortable.js' %}"></script>
+    <script src="{% static 'global/js/task-completed.js' %}"></script>
+</body>
+
+</html>

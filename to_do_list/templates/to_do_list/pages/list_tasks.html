@@ -1,0 +1,120 @@
+{% extends 'global/base.html' %}
+
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+    <div class="page">
+        <div class="column-tasks">
+            <div class="header-list">
+                <div class="header-list-title">
+                    <h1>{{title}}</h1>
+                    <div class="list-icons">
+                        {%if owner %} 
+                            <form>
+                            </form>
+                            <a href="{% url 'to_do_list:list_add' list_pk %}"><i class="fas fa-user-plus edit-list"></i></a>
+                            <a href="{% url 'to_do_list:list_edit' list_pk %}"><i class="fas fa-edit edit-list"></i></a>
+                            <form 
+                                class="form-delete-task js-form-delete-list" 
+                                action="{% url 'to_do_list:list_delete' %}" 
+                                method='POST'
+                                >
+                                    {% csrf_token %}
+                                    <input id="input-list-pk" type="hidden" name="list_pk" value="{{ list_pk }}">
+                                    <button class="button-delete-list" type="submit"><i class="fas fa-trash-alt delete-list-icon"></i></button>
+                            </form>
+                        {% elif title != 'Home'%}
+                            <form>
+                            </form>
+                            <form 
+                                class="form-delete-task js-form-leave-list" 
+                                action="{% url 'to_do_list:list_leave' list_pk %}" 
+                                method='POST'
+                                >
+                                {% csrf_token %}
+                                <input id="input-list-pk" type="hidden" name="list_pk" value="{{ list_pk }}">
+                                <button class="button-delete-list" type="submit"><i class="fas fa-sign-out-alt edit-list"></i></button>
+                            </form>     
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="header-list-actions">
+                    <div class="btn-new-task">
+                        <a href="{% url 'to_do_list:task_new'%}?list={{list_pk}}"><i class="fas fa-plus"></i>Nova tarefa</a>
+                    </div>
+                    <div>
+                        <form>
+                        </form>
+                        <form 
+                            class="form-delete-task" 
+                            action="{% url 'to_do_list:task_hide' %}" 
+                            method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="list_pk" value="{{ list_pk }}">
+                            {% if request.session.hide %}
+                                <button class="button-delete-list button-clear-list" type="submit" value="Mostrar tarefas concluídas"><i class="fas fa-eye"></i>Mostrar tarefas concluídas</button>
+                            {% else %}
+                                <button class="button-delete-list button-clear-list" type="submit" value="Ocultar tarefas concluídas"><i class="fas fa-eye-slash"></i>Ocultar tarefas concluídas</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="sortable">
+                <input id="input-url-sortable" type="hidden" name="url-sortable" value="{% url 'to_do_list:task_order' %}">
+                {% for task in tasks %}
+                    {% if  task.is_completed %}
+                        <div id="id-task-{{task.pk}}" class="task-card task-completed">
+                    {% else %}
+                        <div id="id-task-{{task.pk}}" class="task-card">
+                    {% endif %}
+                        <label class="checkbox">
+                            <form 
+                                class="form-delete-task js-form-completed-task" 
+                                action="{% url 'to_do_list:task_completed' task.is_completed %}" 
+                                method='POST'
+                                enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_pk" value="{{ task.pk }}">
+                                <input type="hidden" name="list_pk" value="{{ list_pk }}">
+                                <button class="button-delete-list" type="submit">
+                                    {% if  task.is_completed %}
+                                        <input id="id-chbx-{{task.pk}}" class="input-chbx-hide" type="checkbox" checked>
+                                    {% else %}
+                                        <input id="id-chbx-{{task.pk}}" class="input-chbx-hide" type="checkbox">
+                                    {% endif %}
+                                    <span class="checkmark"></span>
+                                </button>
+                            </form>
+                        </label>
+                        
+                        <h4>
+                            {{ task.title }}
+                        </h4>
+                        <h5>
+                            {{ task.list_tasks.title }}
+                        </h5>
+                        <div class="task-actions">
+                            <form 
+                                class="form-delete-task js-form-delete-task" 
+                                action="{% url 'to_do_list:task_delete' %}" 
+                                method='POST'>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="task_pk" value="{{ task.pk }}">
+                                    <input type="hidden" name="list_pk" value="{{ list_pk }}">
+                                    <button class="" type="submit"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                            <a href="{% url 'to_do_list:task_edit' task.pk %}"><i class="fas fa-edit edit-task"></i></a>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+        
+        {% include 'global/partials/widgets.html' %}
+    </div>
+    {% include 'global/partials/modal-delete-task.html' %}
+    {% include 'global/partials/modal-delete-list.html' %}
+    {% include 'global/partials/modal-leave-list.html' %}
+{% endblock content %}

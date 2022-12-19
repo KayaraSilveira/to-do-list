@@ -1,0 +1,15 @@
+<div class="column-widgets">
+    <section id="weather-sec">
+        <h4>{{weather.city}}</h4>
+        <div id="icon-temp">
+            <img src="http://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="ícone de tempo">
+            <h2>{{weather.temp}}°C</h2>
+        </div>
+    </section>
+    <section id="time">
+        <h2 id="clock"></h2>
+    </section>
+    <section id="calendar-sec">
+        {% include 'global/partials/calendar.html' %}
+    </section>
+</div>

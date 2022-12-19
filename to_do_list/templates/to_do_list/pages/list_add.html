@@ -1,0 +1,56 @@
+{% extends 'global/base.html' %}
+
+{% block title %}Adicionar{% endblock title %}
+
+{% block content %}
+    <div class="page">
+        <div class="column-tasks">
+            <h1><a class="icon-back" id="icon-back-add-list" href="{% url 'to_do_list:list' list_pk %}"><i class="fas fa-reply"></i></a>{{title}}</h1>
+            <section id="add-member">
+                <h2>Adicione pessoas a sua lista</h2>
+                <form></form>
+                <form
+                    action="{% url 'to_do_list:list_add' list_pk %}" 
+                    method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="list_pk" value="{{ list_pk }}">
+                    <div class="form-group">
+                        <label for="username">Digite o nome de usuário da pessoa que você deseja adicionar</label>
+                        <input id="username" type-"text" name="username">
+                    </div>
+                    <div class="form-group">
+                        <button class="" type="submit">Adicionar</i></button>
+                    </div>
+                </form>
+                {% if messages %}
+                    <div class="messages-container">
+                        {% for message in messages %}
+                            <div class="message {{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </section>
+            <section>
+                <h2>Pessoas adiconadas na sua lista</h2>
+                {% for member in members_list  %}
+                    <div class="member-box">
+                        <h4>{{member}}</h4>
+                        <form
+                            action="{% url 'to_do_list:list_remove' list_pk %}" 
+                            method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{ member }}">
+                            <div class="form-group">
+                                <button class="x-btn" type="submit">X</button>
+                            </div>
+                        </form>
+                    </div>
+                {% endfor %}
+            </section>
+        </div>
+        
+        {% include 'global/partials/widgets.html' %}
+    </div>
+{% endblock content %}
