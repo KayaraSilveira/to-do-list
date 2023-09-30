@@ -29,6 +29,10 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Alata', sans-serif;
+<<<<<<< HEAD
+=======
+    overflow-x: hidden;
+>>>>>>> 9cb2c19 (fix css and files not upload)
 }
 html {
     background-image: linear-gradient(#7200b5, #ac65d6);
@@ -535,10 +539,12 @@ input {
 .buttons-profile {
     width: 50%;
     margin: 40px auto 0px 0px;
+    display: flex;
 }
 
 .buttons-profile a {
-    width: 48%;
+    display: block;
+    
     background-image: linear-gradient(#7200b5, #ac65d6);
     font-size: 18px;
     padding: 10px 50px;
